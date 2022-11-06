@@ -37,9 +37,9 @@ void display(struct user x)
 // transaction of user
 
 int main()
-{   
+{
     FILE *bank;
-    bank=fopen("bank.dat","ab+");
+    bank = fopen("bank.dat", "ab+");
     int op1 = 0, op2, pass, bal, damt, wamt;
     int i = 0;
     char ex;
@@ -57,7 +57,7 @@ int main()
             do
             {
                 a[op2] = input();
-                fwrite(&a[op2],sizeof(a[op2]),1,bank);
+                fwrite(&a[op2], sizeof(a[op2]), 1, bank);
                 fclose(bank);
 
             } while (1 < 0);
@@ -74,60 +74,62 @@ int main()
 
             do
             {
-                if (pass == a[op2].passcode)
+                while (fread(&a[op2], sizeof(a[op2]),op2, bank) == 1)
                 {
-                dis:;
-                    display(a[op2]);
-                fi:;
-                    printf("Choose an option :\n1.Check Account Balance\n2.Diposit\n3.Withdraw\n4.Main Menu\n5.Exit\n");
-                    scanf("%d", &bal);
-                    switch (bal)
+                    if (pass == a[op2].passcode)
                     {
-                    case 1:
-                        printf("The Account Balance :%d\n", a[op2].balance);
-                        break;
-                    case 2:
-                        printf("Enter The Amount :");
-                        scanf("%d", &damt);
-                        a[op2].balance = a[op2].balance + damt;
-                        printf("Balance :%d\n", a[op2].balance);
-                        break;
-                    case 3:
-                        printf("Balance :%d\n", a[op2].balance);
-                        if (a[op2].balance != 0)
+                    dis:;
+                        display(a[op2]);
+                    fi:;
+                        printf("Choose an option :\n1.Check Account Balance\n2.Diposit\n3.Withdraw\n4.Main Menu\n5.Exit\n");
+                        scanf("%d", &bal);
+                        switch (bal)
                         {
+                        case 1:
+                            printf("The Account Balance :%d\n", a[op2].balance);
+                            break;
+                        case 2:
                             printf("Enter The Amount :");
-                            scanf("%d", &wamt);
-                            if (a[op2].balance <= wamt)
+                            scanf("%d", &damt);
+                            a[op2].balance = a[op2].balance + damt;
+                            printf("Balance :%d\n", a[op2].balance);
+                            break;
+                        case 3:
+                            printf("Balance :%d\n", a[op2].balance);
+                            if (a[op2].balance != 0)
                             {
-                                printf("Insufficent Balance");
+                                printf("Enter The Amount :");
+                                scanf("%d", &wamt);
+                                if (a[op2].balance <= wamt)
+                                {
+                                    printf("Insufficent Balance");
+                                }
+                                else
+                                {
+                                    printf("Withdrwal Successful\n");
+                                    a[op2].balance = a[op2].balance - wamt;
+                                    printf("Remaining Balance :%d\n", a[op2].balance);
+                                }
                             }
-                            else
-                            {
-                                printf("Withdrwal Successful\n");
-                                a[op2].balance = a[op2].balance - wamt;
-                                printf("Remaining Balance :%d\n", a[op2].balance);
-                            }
+                            break;
+                        case 4:
+                            goto menu;
+                            continue;
+                        case 5:
+                            exit(1);
+                        default:
+                            printf("Try again later");
+                            // printf("Try again later");
                         }
-                        break;
-                    case 4:
-                        goto menu;
-                        continue;
-                    case 5:
-                        exit(1);
-                    default:
-                        printf("Try again later");
-                        // printf("Try again later");
                     }
+                    else
+                    {
+                        printf("Sorry ! Missing user");
+                        goto menu;
+                    }
+                    goto fi;
                 }
-                else
-                {
-                    printf("Sorry ! Missing user");
-                    goto menu;
-                }
-                goto fi;
             } while (op2 < 5);
         }
     }
 }
-

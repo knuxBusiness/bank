@@ -37,7 +37,9 @@ void display(struct user x)
 // transaction of user
 
 int main()
-{
+{   
+    FILE *bank;
+    bank=fopen("bank.dat","ab+");
     int op1 = 0, op2, pass, bal, damt, wamt;
     int i = 0;
     char ex;
@@ -55,6 +57,9 @@ int main()
             do
             {
                 a[op2] = input();
+                fwrite(&a[op2],sizeof(a[op2]),1,bank);
+                fclose(bank);
+
             } while (1 < 0);
             goto dis;
         }

@@ -55,7 +55,7 @@ int main()
             printf("Enter Your UserNumber :");
             scanf("%d", &op2);
             do
-            {
+            {   
                 a[op2] = input();
                 fwrite(&a[op2], sizeof(a[op2]), 1, bank);
                 fclose(bank);
@@ -102,7 +102,7 @@ int main()
                                 scanf("%d", &wamt);
                                 if (a[op2].balance <= wamt)
                                 {
-                                    printf("Insufficent Balance");
+                                    printf("Laude Income kar Bsdk");
                                 }
                                 else
                                 {
